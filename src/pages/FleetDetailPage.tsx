@@ -5,6 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
+import { getVehicle, getIssues, issueColumns } from "../mock/vehicles";
 import { Gauge, InspectionModal, InspectionsEmpty } from "../components";
 import { inspection } from "../model/inspection";
 import { Vehicle } from "../model/vehicle";
@@ -14,6 +15,7 @@ export const loader: LoaderFunction = ({ params }) => {
     return null;
   }
 
+  // return getVehicle(parseInt(params.id)); Incase the backend is not ready
   return fetch(`http://localhost:3000/vehicles/${params.id}`).then((res) =>
     res.json()
   );
@@ -21,6 +23,7 @@ export const loader: LoaderFunction = ({ params }) => {
 
 const FleetDetailPage: React.FC = () => {
   const vehicle: Vehicle = useLoaderData() as Vehicle;
+  const issues = getIssues();
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const inspections: inspection[] = [
@@ -63,29 +66,83 @@ const FleetDetailPage: React.FC = () => {
           </div>
 
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-            <dt className="truncate text-sm font-medium text-gray-500">ODO</dt>
+            <dt className="truncate text-sm font-medium text-gray-500">Distance covered</dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-              120'000 km
-            </dd>
-          </div>
-
-          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-            <dt className="truncate text-sm font-medium text-gray-500">Year</dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-              2019
+              120,000 KM
             </dd>
           </div>
 
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
             <dt className="truncate text-sm font-medium text-gray-500">
-              Last Inspection
+              Driver Assigned
             </dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-              01.01.2019
+              {vehicle.driver_name}
             </dd>
           </div>
         </dl>
 
+        <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-1">
+          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+            <dt className="truncate text-sm font-medium text-gray-500 p-4">
+              Issues Identified
+            </dt>
+            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    {issueColumns.map((column) => {
+                      return (
+                        <th
+                          key={column.accessor}
+                          scope="col"
+                          className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                        >
+                          {column.label}
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {issues.map((issue) => (
+                    <tr key={issue.issueId}>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
+                        <div className="flex items-center">
+                          <div>
+                            <div className="font-medium text-gray-900">
+                              {issue.issueId}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <div className="text-gray-900">
+                          {issue.issueDescription}
+                        </div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <span className={issue.levelClass}>
+                          {issue.issueLevel}
+                        </span>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <div className="text-gray-900">
+                          {issue.actionRequired}
+                        </div>
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                        <span className={issue.statusClass} >
+                          {issue.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </dl>
         <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-4 items-center flex flex-col">
             <Gauge percentage={95} />
