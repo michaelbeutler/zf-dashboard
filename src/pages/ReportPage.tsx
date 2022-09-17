@@ -44,13 +44,13 @@ const ReportPage: React.FC = () => {
     formData.append("li", licensePlate);
     photos.forEach((p, i) => {
       formData.append(
-        "image",
+        "files",
         dataURLtoBlob(p),
         licensePlate + "-" + i + ".jpg"
       );
     });
 
-    const response = await fetch("http://localhost:3000/upload_images", {
+    const response = await fetch("http://localhost:3000/upload_data", {
       method: "POST",
       body: formData,
     });

@@ -1,26 +1,12 @@
 import { Vehicle } from "../model/vehicle";
 
-const vehicles: Vehicle[] = [
-  ...[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => ({
-    id: i + 1,
-    make: "Ford",
-    model: "F-150",
-    year: 2019,
-    licensePlate: "ABC123",
-    vin: "12345678901234567",
-    driverAssigned: "Darshan",
-    lastInspectionDate: "2022-09-16",
-    issueCount: 3,
-    status: i > 0 && i < 7 ? "healthy" : i === 8 ? "unhealthy" : "inspection",
-  })),
-];
+const vehicles: Vehicle[] = [];
 
 export const columns = [
   { accessor: 'licensePlate', secondary_accessor:'vin', label: 'Name' },
   { accessor: 'model', secondary_accessor:'year', label: 'Model' },
   { accessor: 'status', secondary_accessor:'', label: 'Status' },
   { accessor: 'driver', secondary_accessor:'', label: 'Driver' },
-  { accessor: 'lastInspectionDate', label: 'Last Inspection date' },
   { accessor: '', label: 'action' },
 ]
 
