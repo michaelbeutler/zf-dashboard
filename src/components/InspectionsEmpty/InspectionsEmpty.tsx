@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const InspectionsEmpty = () => {
   return (
-    <div className="text-center">
+    <div className="text-center my-12">
       <svg
         className="mx-auto h-12 w-12 text-gray-400"
         fill="none"

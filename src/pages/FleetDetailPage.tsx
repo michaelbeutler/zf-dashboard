@@ -8,6 +8,7 @@ import React from "react";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { InspectionsEmpty } from "../components";
 import { getVehicle } from "../mock/vehicles";
+import { inspection } from "../model/inspection";
 import { Vehicle } from "../model/vehicle";
 
 export const loader: LoaderFunction = ({ params }) => {
@@ -21,18 +22,17 @@ export const loader: LoaderFunction = ({ params }) => {
 const FleetDetailPage: React.FC = () => {
   const vehicle: Vehicle = useLoaderData() as Vehicle;
 
-  const applications = [
+  const inspections: inspection[] = [
     {
-      applicant: {
-        name: "Inspection #001",
-        email: "Trucky McTruck",
-        imageUrl:
-          "https://cdn0.iconfinder.com/data/icons/engineering-53/32/engineering-15-512.png",
-      },
+      id: 1,
+      name: "Inspection #001",
+      driver: "Trucky McTruck",
+      imageUrl:
+        "https://cdn0.iconfinder.com/data/icons/engineering-53/32/engineering-15-512.png",
+
       date: "2020-01-07",
       dateFull: "September 17, 2022",
       stage: "Completed",
-      href: "#",
     },
   ];
 
@@ -76,22 +76,23 @@ const FleetDetailPage: React.FC = () => {
         <div className="mt-6">
           <div className="overflow-hidden bg-white shadow sm:rounded-md">
             <ul role="list" className="divide-y divide-gray-200">
-              {applications.map((application) => (
-                <li key={application.applicant.email}>
-                  <a href={application.href} className="block hover:bg-gray-50">
+              {inspections.length == 0 && <InspectionsEmpty />}
+              {inspections.map((inspection) => (
+                <li key={inspection.id}>
+                  <a href={""} className="block hover:bg-gray-50">
                     <div className="flex items-center px-4 py-4 sm:px-6">
                       <div className="flex min-w-0 flex-1 items-center">
                         <div className="flex-shrink-0">
                           <img
                             className="h-12 w-12 rounded-full"
-                            src={application.applicant.imageUrl}
+                            src={inspection.imageUrl}
                             alt=""
                           />
                         </div>
                         <div className="min-w-0 flex-1 px-4 md:grid md:grid-cols-2 md:gap-4">
                           <div>
                             <p className="truncate text-sm font-medium text-indigo-600">
-                              {application.applicant.name}
+                              {inspection.name}
                             </p>
                             <p className="mt-2 flex items-center text-sm text-gray-500">
                               <CameraIcon
@@ -99,7 +100,7 @@ const FleetDetailPage: React.FC = () => {
                                 aria-hidden="true"
                               />
                               <span className="truncate">
-                                {application.applicant.email}
+                                {inspection.driver}
                               </span>
                             </p>
                           </div>
@@ -107,8 +108,8 @@ const FleetDetailPage: React.FC = () => {
                             <div>
                               <p className="text-sm text-gray-900">
                                 Applied on{" "}
-                                <time dateTime={application.date}>
-                                  {application.dateFull}
+                                <time dateTime={inspection.date}>
+                                  {inspection.dateFull}
                                 </time>
                               </p>
                               <p className="mt-2 flex items-center text-sm text-gray-500">
@@ -116,7 +117,7 @@ const FleetDetailPage: React.FC = () => {
                                   className="mr-1.5 h-5 w-5 flex-shrink-0 text-green-400"
                                   aria-hidden="true"
                                 />
-                                {application.stage}
+                                {inspection.stage}
                               </p>
                             </div>
                           </div>
