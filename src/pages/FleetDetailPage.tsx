@@ -6,7 +6,6 @@ import {
 import React, { useState } from "react";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
 import { Gauge, InspectionModal, InspectionsEmpty } from "../components";
-import { getVehicle } from "../mock/vehicles";
 import { inspection } from "../model/inspection";
 import { Vehicle } from "../model/vehicle";
 
@@ -15,7 +14,9 @@ export const loader: LoaderFunction = ({ params }) => {
     return null;
   }
 
-  return getVehicle(Number(params.id));
+  return fetch(`http://localhost:3000/vehicles/${params.id}`).then((res) =>
+    res.json()
+  );
 };
 
 const FleetDetailPage: React.FC = () => {
@@ -45,9 +46,9 @@ const FleetDetailPage: React.FC = () => {
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
             <h1 className="text-xl font-semibold text-gray-900">
-              Vehicle: {vehicle.licensePlate} ({vehicle.make} {vehicle.model})
+              Vehicle: {vehicle.license_number} ({vehicle.name} {vehicle.model})
             </h1>
-            <p className="mt-2 text-sm text-gray-700">VIN: {vehicle.vin}</p>
+            <p className="mt-2 text-sm text-gray-700">ID: {vehicle.id}</p>
           </div>
         </div>
 

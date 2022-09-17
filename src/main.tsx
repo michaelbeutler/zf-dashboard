@@ -6,6 +6,7 @@ import { Root } from "./components";
 import "./index.css";
 import { ErrorPage, FleetPage, ReportPage, FleetDetailPage } from "./pages";
 import { loader as fleetDetailLoader } from "./pages/FleetDetailPage";
+import { loader as fleetLoader } from "./pages/FleetPage";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "/dashboard", element: <h1>50% working</h1> },
-      { path: "/fleet", element: <FleetPage /> },
+      { path: "/fleet", element: <FleetPage />, loader: fleetLoader },
       {
         path: "/fleet/:id",
         element: <FleetDetailPage />,

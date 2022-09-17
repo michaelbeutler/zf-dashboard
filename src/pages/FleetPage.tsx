@@ -1,10 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, LoaderFunction, useLoaderData } from "react-router-dom";
 import { StatusBadge } from "../components";
-import { getVehicles } from "../mock/vehicles";
+import { Vehicle } from "../model/vehicle";
+
+export const loader: LoaderFunction = async ({ params }) => {
+  return await fetch("http://localhost:3000/vehicles").then((res) =>
+    res.json()
+  );
+};
 
 const FleetPage: React.FC = () => {
-  const vehicles = getVehicles();
+  const vehicles = useLoaderData() as Vehicle[];
 
   return (
     <div>
@@ -66,20 +72,18 @@ const FleetPage: React.FC = () => {
                           <div className="flex items-center">
                             <div>
                               <div className="font-medium text-gray-900">
-                                {vehicle.licensePlate}
+                                {vehicle.license_number}
                               </div>
-                              <div className="text-gray-500">{vehicle.vin}</div>
+                              <div className="text-gray-500">{vehicle.id}</div>
                             </div>
                           </div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <div className="text-gray-900">
-                            {vehicle.make} {vehicle.model}
-                          </div>
-                          <div className="text-gray-500">{vehicle.year}</div>
+                          <div className="text-gray-900">{vehicle.name}</div>
+                          <div className="text-gray-500">{vehicle.model}</div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <StatusBadge status={vehicle.status} />
+                          <StatusBadge status={"healthy"} />
                         </td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <Link
