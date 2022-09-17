@@ -1,7 +1,7 @@
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import React, { FormEventHandler, useRef, useState } from "react";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 
 const dataURLtoBlob = (dataurl: string) => {
@@ -18,6 +18,7 @@ const dataURLtoBlob = (dataurl: string) => {
 
 const ReportPage: React.FC = () => {
   const videoConstraints = { facingMode: "environment" };
+  const navigate = useNavigate();
 
   const [photos, setPhotos] = useState<string[]>([]);
   const [licensePlate, setLicensePlate] = useState<string>("");
@@ -56,8 +57,8 @@ const ReportPage: React.FC = () => {
     });
 
     if (response.ok) {
-      alert("Report submitted!");
-      redirect("/fleet");
+      alert(response.statusText);
+      navigate("/fleet");
       return true;
     }
 
