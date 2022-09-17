@@ -1,6 +1,7 @@
 import { ExclamationCircleIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import React, { FormEventHandler, useRef, useState } from "react";
+import { redirect } from "react-router-dom";
 import Webcam from "react-webcam";
 
 const ReportPage: React.FC = () => {
@@ -34,6 +35,7 @@ const ReportPage: React.FC = () => {
 
     if (response.ok) {
       alert("Report submitted!");
+      redirect("/fleet")
       return true;
     }
 

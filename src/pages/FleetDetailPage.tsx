@@ -5,7 +5,7 @@ import {
 } from "@heroicons/react/24/outline";
 import React from "react";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
-import { InspectionsEmpty } from "../components";
+import { Gauge, InspectionsEmpty } from "../components";
 import { getVehicle } from "../mock/vehicles";
 import { inspection } from "../model/inspection";
 import { Vehicle } from "../model/vehicle";
@@ -49,6 +49,15 @@ const FleetDetailPage: React.FC = () => {
 
         <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
+            <dt className="truncate text-sm font-medium text-gray-500">
+              Status
+            </dt>
+            <dd className="mt-1 text-3xl font-semibold tracking-tight text-green-600">
+              healthy
+            </dd>
+          </div>
+
+          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
             <dt className="truncate text-sm font-medium text-gray-500">ODO</dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
               120'000 km
@@ -69,6 +78,28 @@ const FleetDetailPage: React.FC = () => {
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
               01.01.2019
             </dd>
+          </div>
+        </dl>
+
+        <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-4">
+          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-4 items-center flex flex-col">
+            <Gauge percentage={95} />
+            <h2 className="text-center font-bold">Fuel</h2>
+          </div>
+
+          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-4 items-center flex flex-col">
+            <Gauge percentage={76} />
+            <h2 className="text-center font-bold">Oil</h2>
+          </div>
+
+          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-4 items-center flex flex-col">
+            <Gauge percentage={45} invert />
+            <h2 className="text-center font-bold">Oil Temperature</h2>
+          </div>
+
+          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-4 items-center flex flex-col">
+            <Gauge percentage={20} invert />
+            <h2 className="text-center font-bold">Water Temperature</h2>
           </div>
         </dl>
 
