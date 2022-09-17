@@ -6,4 +6,15 @@ export interface Vehicle {
   licensePlate: string;
   vin: string;
   status: string;
+  driverAssigned: string;
+  lastInspectionDate: string;
+  issueCount: number;
+}
+
+export interface Issue {
+  issueId: number;
+  issueDescription: string;
+  issueLevel: string;
+  actionRequired: String;
+  status: string;
 }
