@@ -5,20 +5,28 @@ import {
 } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
-import { getVehicle, getIssues, issueColumns } from "../mock/vehicles";
 import { Gauge, InspectionModal, InspectionsEmpty } from "../components";
+import { getIssues, issueColumns } from "../mock/vehicles";
 import { inspection } from "../model/inspection";
 import { Vehicle } from "../model/vehicle";
 
 export const loader: LoaderFunction = ({ params }) => {
   if (!params.id) {
-    return null;
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
   }
 
   // return getVehicle(parseInt(params.id)); Incase the backend is not ready
-  return fetch(`http://localhost:3000/vehicles/${params.id}`).then((res) =>
-    res.json()
-  );
+  return fetch(`http://localhost:3000/vehicles/${params.id}`)
+    .then((res) => res.json())
+    .catch((err) => {
+      throw new Response("", {
+        status: 404,
+        statusText: "Not Found",
+      });
+    });
 };
 
 const FleetDetailPage: React.FC = () => {
@@ -66,7 +74,9 @@ const FleetDetailPage: React.FC = () => {
           </div>
 
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-            <dt className="truncate text-sm font-medium text-gray-500">Distance covered</dt>
+            <dt className="truncate text-sm font-medium text-gray-500">
+              Distance covered
+            </dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
               120,000 KM
             </dd>
@@ -132,7 +142,7 @@ const FleetDetailPage: React.FC = () => {
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <span className={issue.statusClass} >
+                        <span className={issue.statusClass}>
                           {issue.status}
                         </span>
                       </td>

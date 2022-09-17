@@ -151,8 +151,9 @@ const ReportPage: React.FC = () => {
                         prevPhotos.filter((_, i) => i !== index)
                       );
                   }}
+                  key={index}
                 >
-                  <img key={index} src={photo} className="w-24 md:w-32" />
+                  <img src={photo} className="w-24 md:w-32" />
                 </button>
               ))}
             </div>

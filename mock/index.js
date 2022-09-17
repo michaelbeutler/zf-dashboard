@@ -39,11 +39,14 @@ const vehicles = [
 app.post("/upload_data", upload.array("files", 4), function (req, res, next) {
   // req.files is array of `photos` files
   // req.body will contain the text fields, if there were any
+  console.log(req);
   req.files.forEach((f, i) => {
     fs.renameSync(f.path, `uploads/${req.body.li}_${i}.jpg`, (err) => {
       if (err) throw err;
     });
   });
+
+  res.send("ok");
 });
 
 app.get("/vehicles", (req, res) => {

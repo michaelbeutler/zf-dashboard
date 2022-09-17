@@ -4,7 +4,13 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Webcam from "react-webcam";
 import { Root } from "./components";
 import "./index.css";
-import { ErrorPage, FleetPage, ReportPage, FleetDetailPage, DashboardPage } from "./pages";
+import {
+  ErrorPage,
+  FleetPage,
+  ReportPage,
+  FleetDetailPage,
+  DashboardPage,
+} from "./pages";
 import { loader as fleetDetailLoader } from "./pages/FleetDetailPage";
 import { loader as fleetLoader } from "./pages/FleetPage";
 
