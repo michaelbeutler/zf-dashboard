@@ -15,6 +15,7 @@ export const loader: LoaderFunction = ({ params }) => {
     return null;
   }
 
+  // return getVehicle(parseInt(params.id)); Incase the backend is not ready
   return fetch(`http://localhost:3000/vehicles/${params.id}`).then((res) =>
     res.json()
   );
@@ -73,19 +74,10 @@ const FleetDetailPage: React.FC = () => {
 
           <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
             <dt className="truncate text-sm font-medium text-gray-500">
-              Last Inspection
-            </dt>
-            <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-              {vehicle.lastInspectionDate}
-            </dd>
-          </div>
-
-          <div className="overflow-hidden rounded-lg bg-white px-4 py-5 shadow sm:p-6">
-            <dt className="truncate text-sm font-medium text-gray-500">
               Driver Assigned
             </dt>
             <dd className="mt-1 text-3xl font-semibold tracking-tight text-gray-900">
-              {vehicle.driverAssigned}
+              {vehicle.driver_name}
             </dd>
           </div>
         </dl>
@@ -130,7 +122,7 @@ const FleetDetailPage: React.FC = () => {
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <span className="inline-flex rounded-full bg-red-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                        <span className={issue.levelClass}>
                           {issue.issueLevel}
                         </span>
                       </td>
@@ -140,7 +132,7 @@ const FleetDetailPage: React.FC = () => {
                         </div>
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
+                        <span className={issue.statusClass} >
                           {issue.status}
                         </span>
                       </td>

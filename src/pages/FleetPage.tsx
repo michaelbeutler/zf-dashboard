@@ -5,6 +5,7 @@ import { Link, LoaderFunction, useLoaderData } from "react-router-dom";
 import { Vehicle } from "../model/vehicle";
 
 export const loader: LoaderFunction = async ({ params }) => {
+  // return getVehicles(); Incase the backend is not ready
   return await fetch("http://localhost:3000/vehicles").then((res) =>
     res.json()
   );
