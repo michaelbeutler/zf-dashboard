@@ -5,7 +5,7 @@ export interface Vehicle {
   year: number;
   licensePlate: string;
   vin: string;
-  status: string;
+  status: "healthy" | "unhealthy" | "inspection" | string;
   driverAssigned: string;
   lastInspectionDate: string;
   issueCount: number;

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { getVehicles, columns } from "../mock/vehicles";
+import { StatusBadge } from "../components";
 
 const FleetPage: React.FC = () => {
   const vehicles = getVehicles();
@@ -19,7 +20,7 @@ const FleetPage: React.FC = () => {
           <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
             <button
               type="button"
-              className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
+              className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:w-auto"
             >
               Add Vehicle
             </button>
@@ -65,9 +66,7 @@ const FleetPage: React.FC = () => {
                           <div className="text-gray-500">{vehicle.year}</div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                            {vehicle.status}
-                          </span>
+                          <StatusBadge status={vehicle.status} />
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                           <div className="text-gray-900">
@@ -82,8 +81,9 @@ const FleetPage: React.FC = () => {
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <Link
                             to={`/fleet/${vehicle.id}`}
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >Edit<span className="sr-only">{vehicle.id}</span>
+                            className="text-blue-600 hover:text-blue-900"
+                          >
+                            Edit<span className="sr-only">, {vehicle.id}</span>
                           </Link>
                         </td>
                       </tr>
