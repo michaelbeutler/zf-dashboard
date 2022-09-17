@@ -4,6 +4,18 @@ import React, { FormEventHandler, useRef, useState } from "react";
 import { redirect } from "react-router-dom";
 import Webcam from "react-webcam";
 
+const dataURLtoBlob = (dataurl: string) => {
+  let arr = dataurl.split(","),
+    mime = (arr as any)[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new Blob([u8arr], { type: mime });
+};
+
 const ReportPage: React.FC = () => {
   const videoConstraints = { facingMode: "environment" };
 
@@ -28,14 +40,24 @@ const ReportPage: React.FC = () => {
       return false;
     }
 
-    const response = await fetch("/api/report", {
+    const formData = new FormData();
+    formData.append("li", licensePlate);
+    photos.forEach((p, i) => {
+      formData.append(
+        "image",
+        dataURLtoBlob(p),
+        licensePlate + "-" + i + ".jpg"
+      );
+    });
+
+    const response = await fetch("http://localhost:3000/upload_images", {
       method: "POST",
-      body: JSON.stringify({ licensePlate, photos }),
+      body: formData,
     });
 
     if (response.ok) {
       alert("Report submitted!");
-      redirect("/fleet")
+      redirect("/fleet");
       return true;
     }
 

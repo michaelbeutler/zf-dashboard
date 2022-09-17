@@ -3,9 +3,9 @@ import {
   CheckCircleIcon,
   ChevronRightIcon,
 } from "@heroicons/react/24/outline";
-import React from "react";
+import React, { useState } from "react";
 import { LoaderFunction, useLoaderData } from "react-router-dom";
-import { Gauge, InspectionsEmpty } from "../components";
+import { Gauge, InspectionModal, InspectionsEmpty } from "../components";
 import { getVehicle } from "../mock/vehicles";
 import { inspection } from "../model/inspection";
 import { Vehicle } from "../model/vehicle";
@@ -20,6 +20,7 @@ export const loader: LoaderFunction = ({ params }) => {
 
 const FleetDetailPage: React.FC = () => {
   const vehicle: Vehicle = useLoaderData() as Vehicle;
+  const [showModal, setShowModal] = useState<boolean>(false);
 
   const inspections: inspection[] = [
     {
@@ -37,6 +38,9 @@ const FleetDetailPage: React.FC = () => {
 
   return (
     <div>
+      {showModal && (
+        <InspectionModal open onClose={() => setShowModal(false)} />
+      )}
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
           <div className="sm:flex-auto">
@@ -103,13 +107,30 @@ const FleetDetailPage: React.FC = () => {
           </div>
         </dl>
 
-        <div className="mt-6">
+        <div className="sm:flex sm:items-center mt-6">
+          <div className="sm:flex-auto">
+            <h1 className="text-xl font-semibold text-gray-900">
+              Inspections{" "}
+              <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 text-xs font-medium text-blue-800">
+                {inspections.length}
+              </span>
+            </h1>
+            <p className="mt-2 text-sm text-gray-700">
+              This section includes the history of inspections.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-4">
           <div className="overflow-hidden bg-white shadow sm:rounded-md">
             <ul role="list" className="divide-y divide-gray-200">
               {inspections.length == 0 && <InspectionsEmpty />}
               {inspections.map((inspection) => (
                 <li key={inspection.id}>
-                  <a href={""} className="block hover:bg-gray-50">
+                  <button
+                    onClick={() => setShowModal(true)}
+                    className="block hover:bg-gray-50"
+                  >
                     <div className="flex items-center px-4 py-4 sm:px-6">
                       <div className="flex min-w-0 flex-1 items-center">
                         <div className="flex-shrink-0">
@@ -160,7 +181,7 @@ const FleetDetailPage: React.FC = () => {
                         />
                       </div>
                     </div>
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
