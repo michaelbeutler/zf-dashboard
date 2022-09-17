@@ -120,7 +120,16 @@ const ReportPage: React.FC = () => {
 
             <div className="flex gap-2 items-stretc overflow-x-auto">
               {photos.map((photo, index) => (
-                <img key={index} src={photo} className="w-24 md:w-32" />
+                <button
+                  onClick={() => {
+                    confirm(`Do you really want to retake this photo?`) &&
+                      setPhotos((prevPhotos) =>
+                        prevPhotos.filter((_, i) => i !== index)
+                      );
+                  }}
+                >
+                  <img key={index} src={photo} className="w-24 md:w-32" />
+                </button>
               ))}
             </div>
           </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { StatusBadge } from "../components";
 import { getVehicles } from "../mock/vehicles";
 
 const FleetPage: React.FC = () => {
@@ -78,9 +79,7 @@ const FleetPage: React.FC = () => {
                           <div className="text-gray-500">{vehicle.year}</div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                            {vehicle.status}
-                          </span>
+                          <StatusBadge status={vehicle.status} />
                         </td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <Link

@@ -2,7 +2,6 @@ import {
   CameraIcon,
   CheckCircleIcon,
   ChevronRightIcon,
-  EnvelopeIcon,
 } from "@heroicons/react/24/outline";
 import React from "react";
 import { LoaderFunction, useLoaderData } from "react-router-dom";

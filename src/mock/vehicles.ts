@@ -8,7 +8,7 @@ const vehicles: Vehicle[] = [
     year: 2019,
     licensePlate: "ABC123",
     vin: "12345678901234567",
-    status: "Active",
+    status: i > 0 && i < 7 ? "healthy" : i === 8 ? "unhealthy" : "inspection",
   })),
 ];
 
